@@ -1,8 +1,8 @@
 openapi: 3.1.0
 info:
   title: NHL Seasons (Resolver)
-  version: "1.0.0"
-  description: Season metadata (list/current) from statsapi.web.nhl.com.
+  version: "1.0.1"
+  description: Season metadata (current and list) from statsapi.web.nhl.com.
 servers:
   - url: https://statsapi.web.nhl.com/api/v1
 paths:
@@ -17,7 +17,40 @@ paths:
             application/json:
               schema:
                 type: object
-                additionalProperties: true
+                properties:
+                  seasons:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        seasonId:
+                          type: string
+                          description: Eight-digit season id like 20242025
+                          pattern: '^[0-9]{8}$'
+                        regularSeasonStartDate:
+                          type: string
+                          description: YYYY-MM-DD
+                        regularSeasonEndDate:
+                          type: string
+                          description: YYYY-MM-DD
+                        seasonEndDate:
+                          type: string
+                          description: YYYY-MM-DD
+                        numberOfGames:
+                          type: integer
+                        tiesInUse:
+                          type: boolean
+                        olympicsParticipation:
+                          type: boolean
+                        conferencesInUse:
+                          type: boolean
+                        divisionsInUse:
+                          type: boolean
+                        wildCardInUse:
+                          type: boolean
+                      required: [seasonId]
+                      additionalProperties: true
+                additionalProperties: false
   /seasons:
     get:
       operationId: listSeasons
@@ -29,6 +62,35 @@ paths:
             application/json:
               schema:
                 type: object
-                additionalProperties: true
+                properties:
+                  seasons:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        seasonId:
+                          type: string
+                          pattern: '^[0-9]{8}$'
+                        regularSeasonStartDate:
+                          type: string
+                        regularSeasonEndDate:
+                          type: string
+                        seasonEndDate:
+                          type: string
+                        numberOfGames:
+                          type: integer
+                        tiesInUse:
+                          type: boolean
+                        olympicsParticipation:
+                          type: boolean
+                        conferencesInUse:
+                          type: boolean
+                        divisionsInUse:
+                          type: boolean
+                        wildCardInUse:
+                          type: boolean
+                      required: [seasonId]
+                      additionalProperties: true
+                additionalProperties: false
 components:
   schemas: {}
