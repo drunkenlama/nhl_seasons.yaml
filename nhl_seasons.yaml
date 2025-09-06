@@ -1,0 +1,34 @@
+openapi: 3.1.0
+info:
+  title: NHL Seasons (Resolver)
+  version: "1.0.0"
+  description: Season metadata (list/current) from statsapi.web.nhl.com.
+servers:
+  - url: https://statsapi.web.nhl.com/api/v1
+paths:
+  /seasons/current:
+    get:
+      operationId: getCurrentSeason
+      summary: Current NHL season (YYYYYYYY)
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+  /seasons:
+    get:
+      operationId: listSeasons
+      summary: List seasons
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+components:
+  schemas: {}
